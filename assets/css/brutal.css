@@ -347,13 +347,14 @@ html, body {
     color: var(--color-white);
 }
 
-/* 图片使用原始大小，移除容器背景装饰 */
+/* 图片使用固定大小，移除容器背景装饰 */
 .logo-box:has(img) {
-    width: auto;
-    height: auto;
+    width: 48px;
+    height: 48px;
     background: none !important;
     border: none !important;
     box-shadow: none !important;
+    overflow: visible;
 }
 
 .logo-box:has(img):hover {
@@ -361,11 +362,10 @@ html, body {
 }
 
 .logo-box img {
-    width: auto;
-    height: auto;
-    max-width: 120px !important;
-    max-height: 120px !important;
+    width: 44px;
+    height: 44px;
     display: block;
+    object-fit: contain;
 }
 
 .logo-title {

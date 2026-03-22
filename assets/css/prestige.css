@@ -189,10 +189,13 @@
     box-shadow: var(--shadow-2xl);
     width: 100%;
     max-width: 460px;
-    overflow: hidden;
+    max-height: 90vh;
+    overflow-y: auto;
     opacity: 0;
     transform: translateY(30px);
     transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    display: flex;
+    flex-direction: column;
 }
 
 .prestige-card.visible {
@@ -263,8 +266,8 @@
 
 /* 图片使用原始大小，移除容器背景装饰 */
 .logo-icon:has(img) {
-    width: auto;
-    height: auto;
+    width: 80px;
+    height: 80px;
     background: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -276,12 +279,11 @@
 }
 
 .logo-icon img {
-    width: auto;
-    height: auto;
-    max-width: 120px !important;
-    max-height: 120px !important;
+    width: 50px;
+    height: 50px;
     display: block;
     position: static;
+    object-fit: contain;
 }
 
 .site-title {
@@ -522,6 +524,8 @@
 /* 卡片底部 */
 .card-footer {
     padding: 0 40px 32px;
+    flex-shrink: 0;
+    margin-top: auto;
 }
 
 .footer-divider {
@@ -573,6 +577,7 @@
     .prestige-card {
         max-width: 100%;
         border-radius: 20px;
+        max-height: 85vh;
     }
 
     .card-header {
@@ -609,6 +614,7 @@
 
     .prestige-card {
         border-radius: 16px;
+        max-height: 90vh;
     }
 
     .card-header {
@@ -677,4 +683,22 @@
         animation-iteration-count: 1 !important;
         transition-duration: 0.01ms !important;
     }
+}
+
+/* ===== 自定义滚动条样式 ===== */
+.prestige-card::-webkit-scrollbar {
+    width: 6px;
+}
+
+.prestige-card::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+.prestige-card::-webkit-scrollbar-thumb {
+    background: var(--border-color);
+    border-radius: 3px;
+}
+
+.prestige-card::-webkit-scrollbar-thumb:hover {
+    background: var(--primary-color);
 }

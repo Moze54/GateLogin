@@ -628,8 +628,8 @@ html, body {
 
 /* 图片使用原始大小，移除容器背景装饰 */
 .logo-icon:has(img) {
-    width: auto;
-    height: auto;
+    width: 44px;
+    height: 44px;
     background: none !important;
     box-shadow: none !important;
     border-radius: 0 !important;
@@ -641,12 +641,11 @@ html, body {
 }
 
 .logo-icon img {
-    width: auto;
-    height: auto;
-    max-width: 120px !important;
-    max-height: 120px !important;
+    width: 40px;
+    height: 40px;
     display: block;
     position: static;
+    object-fit: contain;
 }
 
 .site-title {
