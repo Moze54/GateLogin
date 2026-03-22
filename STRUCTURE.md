@@ -8,12 +8,14 @@ GateLogin/
 ├── templates/             # 模板目录
 │   ├── default.php        # 默认模板（简约现代风格）
 │   ├── aurora.php         # 极光风格模板
-│   └── prestige.php       # 大气庄重模板
+│   ├── prestige.php       # 大气庄重模板
+│   └── brutal.php         # 新野兽派模板
 ├── assets/                # 全局资源目录
 │   └── css/               # 样式文件
 │       ├── default.css    # 默认模板样式
 │       ├── aurora.css     # 极光模板样式
-│       └── prestige.css   # 大气庄重模板样式
+│       ├── prestige.css   # 大气庄重模板样式
+│       └── brutal.css     # 新野兽派模板样式
 │
 └── STRUCTURE.md           # 本文档（项目结构说明）
 ```
@@ -46,6 +48,7 @@ templates/
 | **default** | `templates/default.php` | 简约现代、圆形背景装饰、渐变色主题、单卡片居中布局 |
 | **aurora** | `templates/aurora.php` | 极光背景动画、玻璃态设计、流星效果、双栏响应式布局 |
 | **prestige** | `templates/prestige.php` | 大气庄重、浅色系配色（蓝色/青色）、渐变背景、现代简洁设计 |
+| **brutal** | `templates/brutal.php` | 新野兽派、粗边框硬阴影、高对比度、大胆几何形状、独特视觉风格 |
 
 ## 模板开发指南
 
@@ -218,6 +221,7 @@ include __DIR__ . '/templates/' . $template . '.php';
 ### 计划中的模板
 
 - [x] **prestige** - 大气庄重风格（已完成）
+- [x] **brutal** - 新野兽派风格（已完成）
 - [ ] **minimal** - 极简黑白风格
 - [ ] **neon** - 霓虹灯赛博朋克风格
 - [ ] **nature** - 自然风光主题
@@ -240,7 +244,9 @@ include __DIR__ . '/templates/' . $template . '.php';
 - ✨ 创建项目结构
 - ✨ 添加极光风格模板（Aurora）
 - ✨ 添加大气庄重模板（Prestige）
+- ✨ 添加新野兽派模板（Brutal）
 - ✨ 统一模板文件命名和目录结构
+- ✨ 统一资源文件到 assets/css 目录
 - ✨ 完善响应式设计
 - ✨ 添加多种动画效果
 - 📝 完善项目结构文档

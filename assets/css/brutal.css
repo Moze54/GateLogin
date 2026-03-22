@@ -1,0 +1,745 @@
+/**
+ * Brutal Template - 新野兽派风格
+ * 粗边框、硬阴影、高对比度、大胆几何形状
+ */
+
+/* ===== CSS 变量 ===== */
+:root {
+    /* 主色调 - 可通过 PHP 覆盖 */
+    --primary-color: #FF6B6B;
+
+    /* 新野兽派配色 */
+    --color-black: #1a1a1a;
+    --color-white: #fafafa;
+    --color-yellow: #FFD93D;
+    --color-pink: #FF6B9D;
+    --color-blue: #4ECDC4;
+    --color-green: #95E1D3;
+    --color-purple: #A8E6CF;
+
+    /* 边框和阴影 */
+    --border-width: 3px;
+    --shadow-offset: 5px;
+    --border-radius: 0px;
+
+    /* 过渡 */
+    --transition-fast: 0.1s ease;
+    --transition-base: 0.2s ease;
+}
+
+/* ===== 全局样式 ===== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+.brutal-body {
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    background: var(--color-white);
+    color: var(--color-black);
+}
+
+/* ===== 背景装饰 ===== */
+.brutal-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.bg-pattern {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image:
+        linear-gradient(var(--color-black) 1px, transparent 1px),
+        linear-gradient(90deg, var(--color-black) 1px, transparent 1px);
+    background-size: 40px 40px;
+    opacity: 0.03;
+}
+
+.floating-shape {
+    position: absolute;
+    border: var(--border-width) solid var(--color-black);
+    background: var(--color-yellow);
+    opacity: 0.8;
+    animation: brutalFloat 20s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 120px;
+    height: 120px;
+    top: 10%;
+    right: 10%;
+    transform: rotate(45deg);
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 80px;
+    height: 80px;
+    bottom: 20%;
+    left: 8%;
+    background: var(--color-pink);
+    border-radius: 50%;
+    animation-delay: -7s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    top: 50%;
+    left: 5%;
+    background: var(--color-blue);
+    transform: rotate(30deg);
+    animation-delay: -14s;
+}
+
+@keyframes brutalFloat {
+    0%, 100% {
+        transform: translate(0, 0) rotate(var(--rotation, 0deg));
+    }
+    25% {
+        transform: translate(20px, -30px) rotate(calc(var(--rotation, 0deg) + 90deg));
+    }
+    50% {
+        transform: translate(-10px, 20px) rotate(calc(var(--rotation, 0deg) + 180deg));
+    }
+    75% {
+        transform: translate(30px, 10px) rotate(calc(var(--rotation, 0deg) + 270deg));
+    }
+}
+
+.shape-1 { --rotation: 45deg; }
+.shape-2 { --rotation: 0deg; }
+.shape-3 { --rotation: 30deg; }
+
+/* ===== 主容器 ===== */
+.brutal-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 60px 100px;
+    overflow: hidden;
+}
+
+/* ===== 左侧装饰区域 ===== */
+.brutal-decor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: var(--color-yellow);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 60px 80px;
+    z-index: 0;
+    overflow: hidden;
+}
+
+.decor-content {
+    position: relative;
+    z-index: 2;
+    width: 100%;
+    max-height: 100%;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto 1fr;
+    gap: 40px;
+    align-content: center;
+}
+
+.decor-title {
+    grid-column: 1 / -1;
+    text-align: left;
+}
+
+.decor-title h1 {
+    font-size: 140px;
+    font-weight: 900;
+    line-height: 0.9;
+    text-transform: uppercase;
+    letter-spacing: -5px;
+    margin-bottom: 20px;
+    color: var(--color-black);
+    text-shadow: 12px 12px 0px var(--color-white);
+}
+
+.decor-title h2 {
+    font-size: 90px;
+    font-weight: 900;
+    line-height: 1;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    color: var(--primary-color);
+    margin-left: 50px;
+    text-shadow: 8px 8px 0px var(--color-black);
+}
+
+.decor-shapes {
+    grid-column: 1 / 2;
+    grid-row: 2 / 3;
+    position: relative;
+    width: 100%;
+    min-height: 300px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.big-shape {
+    position: absolute;
+    border: var(--border-width) solid var(--color-black);
+}
+
+.shape-square {
+    width: 200px;
+    height: 200px;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(15deg);
+    background: var(--primary-color);
+    box-shadow: 10px 10px 0px var(--color-black);
+}
+
+.shape-circle {
+    width: 160px;
+    height: 160px;
+    top: 20%;
+    left: 20%;
+    background: var(--color-pink);
+    border-radius: 50%;
+    box-shadow: 8px 8px 0px var(--color-black);
+}
+
+.shape-triangle {
+    width: 0;
+    height: 0;
+    bottom: 15%;
+    right: 15%;
+    border-left: 80px solid transparent;
+    border-right: 80px solid transparent;
+    border-bottom: 140px solid var(--color-blue);
+    border: var(--border-width) solid var(--color-black);
+    filter: drop-shadow(8px 8px 0px var(--color-black));
+}
+
+.decor-text {
+    grid-column: 2 / 3;
+    grid-row: 2 / 3;
+    text-align: left;
+    padding: 20px 40px;
+    align-self: center;
+}
+
+.decor-text p {
+    font-size: 32px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    color: var(--color-black);
+    margin-bottom: 24px;
+    line-height: 1.2;
+}
+
+.decor-line {
+    display: block;
+    width: 180px;
+    height: var(--border-width);
+    background: var(--color-black);
+}
+
+/* ===== 右侧登录区域 ===== */
+.brutal-card {
+    position: relative;
+    z-index: 10;
+    background: var(--color-white);
+    border: var(--border-width) solid var(--color-black);
+    box-shadow: 12px 12px 0px var(--color-black);
+    width: 100%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    opacity: 0;
+    transform: translateX(30px);
+    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.brutal-card.visible {
+    opacity: 1;
+    transform: translateX(0);
+}
+
+/* 顶部装饰条 */
+.card-banner {
+    display: flex;
+    gap: 8px;
+    padding: 12px 16px;
+    background: var(--color-black);
+}
+
+.banner-dot {
+    width: 12px;
+    height: 12px;
+    background: var(--color-white);
+    border-radius: 50%;
+}
+
+.banner-dot:nth-child(2) {
+    background: var(--color-yellow);
+}
+
+.banner-dot:nth-child(3) {
+    background: var(--primary-color);
+}
+
+/* Logo 区域 */
+.card-logo {
+    padding: 32px 40px 20px;
+    text-align: left;
+    border-bottom: none;
+    flex-shrink: 0;
+}
+
+.logo-box {
+    width: 80px;
+    height: 80px;
+    margin: 0 0 24px;
+    background: var(--primary-color);
+    border: var(--border-width) solid var(--color-black);
+    box-shadow: 4px 4px 0px var(--color-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-base);
+}
+
+.logo-box:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 6px 6px 0px var(--color-black);
+}
+
+.logo-box svg {
+    width: 44px;
+    height: 44px;
+    color: var(--color-white);
+}
+
+.logo-title {
+    font-size: 42px;
+    font-weight: 800;
+    color: var(--color-black);
+    margin-bottom: 12px;
+    text-transform: uppercase;
+    letter-spacing: -2px;
+    text-align: left;
+}
+
+.logo-badge {
+    display: inline-block;
+    padding: 6px 12px;
+    background: var(--color-yellow);
+    border: 2px solid var(--color-black);
+    font-size: 12px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+}
+
+/* 表单 */
+.brutal-form {
+    padding: 24px 40px;
+    flex-grow: 1;
+}
+
+.form-group {
+    margin-bottom: 24px;
+}
+
+.brutal-label {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 10px;
+    color: var(--color-black);
+}
+
+.brutal-label svg {
+    color: var(--primary-color);
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+}
+
+.brutal-input {
+    width: 100%;
+    height: 56px;
+    padding: 0 16px;
+    font-size: 16px;
+    font-family: inherit;
+    font-weight: 500;
+    color: var(--color-black);
+    background: var(--color-white);
+    border: var(--border-width) solid var(--color-black);
+    transition: all var(--transition-base);
+    outline: none;
+}
+
+.brutal-input::placeholder {
+    color: #999;
+    font-weight: 400;
+}
+
+.brutal-input:focus {
+    background: #fffbeb;
+    border-color: var(--primary-color);
+    box-shadow: 4px 4px 0px var(--color-black);
+    transform: translate(-2px, -2px);
+}
+
+.input-wrapper.focused .input-corner {
+    opacity: 1;
+}
+
+/* 输入框角落装饰 */
+.input-corner {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background: var(--primary-color);
+    opacity: 0;
+    transition: opacity var(--transition-base);
+}
+
+.input-corner.tl { top: -1px; left: -1px; }
+.input-corner.tr { top: -1px; right: -1px; }
+.input-corner.bl { bottom: -1px; left: -1px; }
+.input-corner.br { bottom: -1px; right: -1px; }
+
+/* 密码切换按钮 */
+.password-toggle {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--color-black);
+    border: none;
+    cursor: pointer;
+    color: var(--color-white);
+    transition: all var(--transition-fast);
+}
+
+.password-toggle:hover {
+    background: var(--primary-color);
+    transform: translateY(-50%) translate(-2px, -2px);
+    box-shadow: 2px 2px 0px var(--color-black);
+}
+
+.password-toggle svg {
+    width: 18px;
+    height: 18px;
+}
+
+/* 记住我 */
+.form-options {
+    margin-bottom: 24px;
+}
+
+.brutal-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    pointer-events: none;
+}
+
+.checkbox-box {
+    width: 22px;
+    height: 22px;
+    background: var(--color-white);
+    border: var(--border-width) solid var(--color-black);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    flex-shrink: 0;
+}
+
+.checkbox-input:checked + .checkbox-box {
+    background: var(--primary-color);
+    border-color: var(--color-black);
+    box-shadow: 2px 2px 0px var(--color-black);
+    transform: translate(-1px, -1px);
+}
+
+.checkbox-input:checked + .checkbox-box .checkmark {
+    opacity: 1;
+}
+
+.checkmark {
+    color: var(--color-white);
+    opacity: 0;
+    transition: opacity var(--transition-fast);
+}
+
+.checkbox-text {
+    font-size: 14px;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+/* 提交按钮 */
+.brutal-submit {
+    width: 100%;
+    height: 60px;
+    background: var(--primary-color);
+    color: var(--color-white);
+    font-size: 18px;
+    font-family: inherit;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    border: var(--border-width) solid var(--color-black);
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 12px;
+    transition: all var(--transition-base);
+    box-shadow: var(--shadow-offset) var(--shadow-offset) 0px var(--color-black);
+}
+
+.brutal-submit:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: calc(var(--shadow-offset) + 2px) calc(var(--shadow-offset) + 2px) 0px var(--color-black);
+}
+
+.brutal-submit:active {
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--color-black);
+}
+
+.brutal-submit.submitting {
+    opacity: 0.7;
+    cursor: not-allowed;
+    transform: translate(2px, 2px);
+    box-shadow: 2px 2px 0px var(--color-black);
+}
+
+.submit-arrow {
+    transition: transform var(--transition-base);
+}
+
+.brutal-submit:hover .submit-arrow {
+    transform: translateX(4px);
+}
+
+/* 底部 */
+.card-footer {
+    border-top: var(--border-width) solid var(--color-black);
+}
+
+.footer-divider {
+    height: var(--border-width);
+    background: repeating-linear-gradient(
+        90deg,
+        var(--color-black) 0px,
+        var(--color-black) 10px,
+        transparent 10px,
+        transparent 20px
+    );
+}
+
+.footer-links {
+    display: flex;
+    justify-content: flex-start;
+    gap: 16px;
+    padding: 20px 40px 32px;
+    flex-wrap: wrap;
+}
+
+.brutal-link {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 16px;
+    background: var(--color-white);
+    border: var(--border-width) solid var(--color-black);
+    font-size: 12px;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    text-decoration: none;
+    color: var(--color-black);
+    transition: all var(--transition-base);
+    box-shadow: 3px 3px 0px var(--color-black);
+}
+
+.brutal-link:hover {
+    transform: translate(-2px, -2px);
+    box-shadow: 5px 5px 0px var(--color-black);
+    background: var(--color-yellow);
+}
+
+.brutal-link svg {
+    width: 16px;
+    height: 16px;
+}
+
+/* ===== 响应式设计 ===== */
+@media (max-width: 1024px) {
+    .brutal-wrapper {
+        justify-content: center;
+        padding: 40px 20px;
+    }
+
+    .brutal-decor {
+        display: none;
+    }
+
+    .brutal-card {
+        max-width: 480px;
+        margin: 0 auto;
+        height: auto;
+        min-height: auto;
+    }
+
+    .card-logo {
+        padding: 40px 32px 24px;
+        text-align: center;
+    }
+
+    .logo-box {
+        margin: 0 auto 20px;
+    }
+
+    .logo-title {
+        text-align: center;
+        font-size: 32px;
+    }
+
+    .brutal-form {
+        padding: 32px;
+    }
+
+    .footer-links {
+        justify-content: center;
+        padding: 24px 32px 32px;
+    }
+}
+
+@media (max-width: 768px) {
+    .card-logo {
+        padding: 32px 24px 20px;
+    }
+
+    .brutal-form {
+        padding: 24px;
+    }
+
+    .footer-links {
+        padding: 20px 24px 24px;
+    }
+
+    .logo-box {
+        width: 70px;
+        height: 70px;
+    }
+
+    .brutal-input,
+    .brutal-submit {
+        height: 52px;
+    }
+}
+
+@media (max-width: 480px) {
+    .brutal-wrapper {
+        padding: 20px 16px;
+    }
+
+    .card-logo {
+        padding: 24px 20px 16px;
+    }
+
+    .brutal-form {
+        padding: 20px;
+    }
+
+    .footer-links {
+        flex-direction: column;
+        padding: 16px 20px 20px;
+    }
+
+    .brutal-link {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .logo-title {
+        font-size: 24px;
+    }
+
+    .brutal-input,
+    .brutal-submit {
+        height: 50px;
+    }
+}
+
+/* ===== 辅助功能 ===== */
+.brutal-submit:focus-visible,
+.brutal-input:focus-visible,
+.brutal-link:focus-visible {
+    outline: 3px solid var(--color-yellow);
+    outline-offset: 2px;
+}
+
+/* ===== 减少动画 ===== */
+@media (prefers-reduced-motion: reduce) {
+    *,
+    *::before,
+    *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+    }
+}
