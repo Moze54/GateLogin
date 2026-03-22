@@ -99,6 +99,16 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
         );
         $form->addInput($primaryColor);
 
+        // 图标地址
+        $iconUrl = new Typecho_Widget_Helper_Form_Element_Text(
+            'iconUrl',
+            NULL,
+            '',
+            _t('图标地址'),
+            _t('Logo 图标的图片地址（如 https://example.com/logo.png），留空则使用默认 SVG 图标')
+        );
+        $form->addInput($iconUrl);
+
         // 图标 SVG
         $iconSvg = new Typecho_Widget_Helper_Form_Element_Textarea(
             'iconSvg',
@@ -106,8 +116,8 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             '<path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
 <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
 <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
-            _t('图标 SVG'),
-            _t('Logo 图标的 SVG 代码，只写 path/polygon/circle 等元素内容')
+            _t('图标 SVG（默认图标）'),
+            _t('Logo 图标的 SVG 代码，只写 path/polygon/circle 等元素内容。当图标地址为空时使用此图标')
         );
         $form->addInput($iconSvg);
     }
@@ -161,6 +171,9 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             'primaryColor' => ($pluginOptions && isset($pluginOptions->primaryColor) && !empty($pluginOptions->primaryColor))
                 ? $pluginOptions->primaryColor
                 : '#1e293b',
+            'iconUrl' => ($pluginOptions && isset($pluginOptions->iconUrl) && !empty($pluginOptions->iconUrl))
+                ? $pluginOptions->iconUrl
+                : '',
             'iconSvg' => ($pluginOptions && isset($pluginOptions->iconSvg) && !empty($pluginOptions->iconSvg))
                 ? $pluginOptions->iconSvg
                 : '<path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>

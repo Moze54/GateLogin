@@ -76,9 +76,13 @@ if (!isset($rememberName)) {
             <!-- Logo 区域 -->
             <div class="card-logo">
                 <div class="logo-box">
-                    <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                        <?php echo $config['iconSvg']; ?>
-                    </svg>
+                    <?php if (!empty($config['iconUrl'])): ?>
+                        <img src="<?php echo htmlspecialchars($config['iconUrl']); ?>" alt="<?php echo htmlspecialchars($config['siteTitle']); ?>" />
+                    <?php else: ?>
+                        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                            <?php echo $config['iconSvg']; ?>
+                        </svg>
+                    <?php endif; ?>
                 </div>
                 <h1 class="logo-title"><?php echo htmlspecialchars($config['siteTitle']); ?></h1>
                 <div class="logo-badge"><?php echo htmlspecialchars($config['siteSubtitle']); ?></div>

@@ -59,9 +59,13 @@ if (!isset($rememberName)) {
                     </div>
                     <div class="brand-info">
                         <div class="brand-logo animated-logo">
-                            <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <?php echo $config['iconSvg']; ?>
-                            </svg>
+                            <?php if (!empty($config['iconUrl'])): ?>
+                                <img src="<?php echo htmlspecialchars($config['iconUrl']); ?>" alt="<?php echo htmlspecialchars($config['siteTitle']); ?>" />
+                            <?php else: ?>
+                                <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <?php echo $config['iconSvg']; ?>
+                                </svg>
+                            <?php endif; ?>
                         </div>
                         <h2 class="brand-title"><?php echo htmlspecialchars($config['siteTitle']); ?></h2>
                         <p class="brand-tagline"><?php echo htmlspecialchars($config['siteSubtitle']); ?></p>

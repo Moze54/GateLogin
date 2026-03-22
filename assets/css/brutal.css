@@ -340,10 +340,32 @@ html, body {
     box-shadow: 6px 6px 0px var(--color-black);
 }
 
+/* SVG 保持固定大小 */
 .logo-box svg {
     width: 44px;
     height: 44px;
     color: var(--color-white);
+}
+
+/* 图片使用原始大小，移除容器背景装饰 */
+.logo-box:has(img) {
+    width: auto;
+    height: auto;
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+}
+
+.logo-box:has(img):hover {
+    transform: none !important;
+}
+
+.logo-box img {
+    width: auto;
+    height: auto;
+    max-width: 120px !important;
+    max-height: 120px !important;
+    display: block;
 }
 
 .logo-title {

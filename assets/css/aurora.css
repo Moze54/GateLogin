@@ -343,11 +343,31 @@
     color: white;
 }
 
+/* SVG 保持固定大小 */
 .animated-logo svg {
     width: 60px;
     height: 60px;
     filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
     animation: pulse 2s ease-in-out infinite;
+}
+
+/* 图片使用原始大小，移除容器背景装饰 */
+.brand-logo:has(img) {
+    width: auto;
+    height: auto;
+    background: none !important;
+    backdrop-filter: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    box-shadow: none !important;
+}
+
+.animated-logo img {
+    width: auto;
+    height: auto;
+    max-width: 120px !important;
+    max-height: 120px !important;
+    display: block;
 }
 
 @keyframes pulse {

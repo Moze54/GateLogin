@@ -252,12 +252,36 @@
     }
 }
 
+/* SVG 保持固定大小 */
 .logo-icon svg {
     width: 40px;
     height: 40px;
     color: #ffffff;
     position: relative;
     z-index: 1;
+}
+
+/* 图片使用原始大小，移除容器背景装饰 */
+.logo-icon:has(img) {
+    width: auto;
+    height: auto;
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+    overflow: visible;
+}
+
+.logo-icon:has(img)::before {
+    display: none !important;
+}
+
+.logo-icon img {
+    width: auto;
+    height: auto;
+    max-width: 120px !important;
+    max-height: 120px !important;
+    display: block;
+    position: static;
 }
 
 .site-title {

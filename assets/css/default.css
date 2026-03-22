@@ -226,22 +226,46 @@
     width: 64px;
     height: 64px;
     margin: 0 auto 20px;
-    background: linear-gradient(135deg, var(--primary-color), var(--primary-hover));
+    background: linear-gradient(135deg, #2d2d2d, #1a1a1a);
     border-radius: var(--radius-md);
     display: flex;
     align-items: center;
     justify-content: center;
     color: white;
-    box-shadow: 0 8px 20px rgba(96, 165, 250, 0.3);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 
 :root[data-theme="light"] .logo-icon {
-    box-shadow: 0 8px 20px rgba(59, 130, 246, 0.25);
+    background: linear-gradient(135deg, #1a1a1a, #000000);
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25);
 }
 
+/* SVG 保持固定大小 */
 .logo-icon svg {
     width: 36px;
     height: 36px;
+}
+
+/* 图片使用原始大小，移除容器背景装饰 */
+.logo-icon:has(img) {
+    width: auto;
+    height: auto;
+    background: none !important;
+    box-shadow: none !important;
+    border-radius: 0 !important;
+}
+
+/* 确保亮白模式下图片也没有阴影 */
+:root[data-theme="light"] .logo-icon:has(img) {
+    box-shadow: none !important;
+}
+
+.logo-icon img {
+    width: auto;
+    height: auto;
+    max-width: 120px !important;
+    max-height: 120px !important;
+    display: block;
 }
 
 .logo-title {
@@ -319,6 +343,19 @@
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px var(--primary-light);
     background: var(--input-bg-focus);
+}
+
+/* 亮白模式输入框焦点使用黑色 */
+:root[data-theme="light"] .form-input:focus {
+    border-color: #000000 !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
+    outline: none !important;
+}
+
+/* 亮白模式输入框 focus-visible 也使用黑色 */
+:root[data-theme="light"] .form-input:focus-visible {
+    outline: 2px solid #000000 !important;
+    outline-offset: 2px;
 }
 
 .input-wrapper {
