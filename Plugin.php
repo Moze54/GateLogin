@@ -62,6 +62,19 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
         );
         $form->addInput($siteSubtitle);
 
+        // 登录模板
+        $template = new Typecho_Widget_Helper_Form_Element_Select(
+            'template',
+            [
+                'default' => _t('简约现代 - 单卡片居中布局，圆形背景装饰'),
+                'aurora' => _t('极光风格 - 双栏布局，极光背景动画，玻璃态设计')
+            ],
+            'default',
+            _t('登录模板'),
+            _t('选择登录页面的显示模板风格')
+        );
+        $form->addInput($template);
+
         // 底部文案
         $footerText = new Typecho_Widget_Helper_Form_Element_Text(
             'footerText',
@@ -148,7 +161,10 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
                 ? $pluginOptions->iconSvg
                 : '<path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
 <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
-<path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>'
+<path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>',
+            'template' => ($pluginOptions && isset($pluginOptions->template) && !empty($pluginOptions->template))
+                ? $pluginOptions->template
+                : 'default'
         );
 
         // 检查是否为登录页面
@@ -166,8 +182,17 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             // 设置 body class 用于样式
             $bodyClass = 'body-100';
 
+            // 获取选择的模板
+            $templateName = $config['template'];
+            $templateFile = dirname(__FILE__) . '/templates/' . $templateName . '.php';
+
+            // 安全检查：确保模板文件存在
+            if (!file_exists($templateFile)) {
+                $templateFile = dirname(__FILE__) . '/templates/default.php';
+            }
+
             // 渲染自定义登录页面
-            include dirname(__FILE__) . '/login.php';
+            include $templateFile;
             exit;  // 终止执行，阻止原始 login.php 继续执行
         }
     }

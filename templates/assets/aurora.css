@@ -1,0 +1,778 @@
+/**
+ * Aurora Template Styles - 极光风格登录页面样式
+ *
+ * 设计理念：
+ * - 玻璃态拟态设计 (Glassmorphism)
+ * - 流动的极光背景动画
+ * - 精致的微交互动画
+ * - 完全响应式布局
+ */
+
+/* ==================== 全局重置 ==================== */
+*, *::before, *::after {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+:root {
+    --primary-color: #6366f1;
+    --primary-glow: rgba(99, 102, 241, 0.25);
+    --secondary-color: #8b5cf6;
+    --accent-color: #ec4899;
+    --text-primary: #f8fafc;
+    --text-secondary: #94a3b8;
+    --text-muted: #64748b;
+    --bg-dark: #0f172a;
+    --glass-bg: rgba(255, 255, 255, 0.05);
+    --glass-border: rgba(255, 255, 255, 0.1);
+    --glass-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+    --input-bg: rgba(255, 255, 255, 0.05);
+    --input-border: rgba(255, 255, 255, 0.1);
+    --transition-fast: 0.2s ease;
+    --transition-normal: 0.3s ease;
+    --transition-slow: 0.5s ease;
+}
+
+.aurora-body {
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--bg-dark);
+    overflow-x: hidden;
+    position: relative;
+}
+
+/* ==================== 极光背景动画 ==================== */
+.aurora-background {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    z-index: 0;
+}
+
+.aurora {
+    position: absolute;
+    width: 150%;
+    height: 150%;
+    background: linear-gradient(
+        45deg,
+        var(--primary-color) 0%,
+        var(--secondary-color) 25%,
+        var(--accent-color) 50%,
+        var(--secondary-color) 75%,
+        var(--primary-color) 100%
+    );
+    filter: blur(80px);
+    opacity: 0.3;
+    animation: aurora-move 15s ease-in-out infinite;
+}
+
+.aurora-1 {
+    top: -50%;
+    left: -50%;
+    animation-delay: 0s;
+}
+
+.aurora-2 {
+    top: -50%;
+    right: -50%;
+    animation-delay: -5s;
+    animation-direction: reverse;
+}
+
+.aurora-3 {
+    bottom: -50%;
+    left: -50%;
+    animation-delay: -10s;
+}
+
+.aurora-4 {
+    bottom: -50%;
+    right: -50%;
+    animation-delay: -15s;
+    animation-direction: reverse;
+}
+
+@keyframes aurora-move {
+    0%, 100% {
+        transform: translate(0, 0) rotate(0deg) scale(1);
+    }
+    25% {
+        transform: translate(5%, 5%) rotate(90deg) scale(1.1);
+    }
+    50% {
+        transform: translate(0, 10%) rotate(180deg) scale(1);
+    }
+    75% {
+        transform: translate(-5%, 5%) rotate(270deg) scale(1.1);
+    }
+}
+
+/* 星星背景 */
+.stars {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image:
+        radial-gradient(2px 2px at 20px 30px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 160px 120px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 230px 80px, rgba(255, 255, 255, 0.3), transparent),
+        radial-gradient(2px 2px at 300px 150px, rgba(255, 255, 255, 0.2), transparent),
+        radial-gradient(1px 1px at 350px 60px, rgba(255, 255, 255, 0.4), transparent),
+        radial-gradient(2px 2px at 420px 180px, rgba(255, 255, 255, 0.3), transparent);
+    background-repeat: repeat;
+    background-size: 500px 500px;
+    animation: twinkle 4s ease-in-out infinite;
+}
+
+@keyframes twinkle {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* 流星 */
+.shooting-star {
+    position: absolute;
+    width: 100px;
+    height: 2px;
+    background: linear-gradient(90deg, rgba(255, 255, 255, 0.8), transparent);
+    top: 10%;
+    left: -100px;
+    transform: rotate(-45deg);
+    animation: shooting 8s ease-in-out infinite;
+    opacity: 0;
+}
+
+@keyframes shooting {
+    0% {
+        left: -100px;
+        opacity: 0;
+    }
+    5% {
+        opacity: 1;
+    }
+    10% {
+        left: calc(100% + 100px);
+        opacity: 0;
+    }
+    100% {
+        left: calc(100% + 100px);
+        opacity: 0;
+    }
+}
+
+/* ==================== 登录容器 ==================== */
+.login-wrapper {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    max-width: 1000px;
+    padding: 2rem;
+    animation: fade-in-up 0.8s ease-out;
+}
+
+@keyframes fade-in-up {
+    from {
+        opacity: 0;
+        transform: translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* ==================== 玻璃态卡片 ==================== */
+.glass-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    border-radius: 24px;
+    box-shadow: var(--glass-shadow);
+    overflow: hidden;
+    min-height: 600px;
+    position: relative;
+    --mouse-x: 50%;
+    --mouse-y: 50%;
+}
+
+.glass-card::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: radial-gradient(
+        600px circle at var(--mouse-x) var(--mouse-y),
+        rgba(255, 255, 255, 0.06),
+        transparent 40%
+    );
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0;
+    transition: opacity var(--transition-normal);
+}
+
+.glass-card:hover::before {
+    opacity: 1;
+}
+
+/* ==================== 左侧装饰区 ==================== */
+.card-decoration {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 3rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.card-decoration::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 60%);
+    animation: rotate 20s linear infinite;
+}
+
+@keyframes rotate {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
+}
+
+.decoration-content {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+}
+
+/* 浮动图形 */
+.floating-shapes {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+}
+
+.shape {
+    position: absolute;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+    animation: float 6s ease-in-out infinite;
+}
+
+.shape-1 {
+    width: 80px;
+    height: 80px;
+    top: 20%;
+    left: 20%;
+    animation-delay: 0s;
+}
+
+.shape-2 {
+    width: 60px;
+    height: 60px;
+    top: 60%;
+    right: 20%;
+    animation-delay: 2s;
+}
+
+.shape-3 {
+    width: 100px;
+    height: 100px;
+    bottom: 20%;
+    left: 40%;
+    animation-delay: 4s;
+}
+
+@keyframes float {
+    0%, 100% {
+        transform: translateY(0) rotate(0deg);
+        opacity: 0.5;
+    }
+    50% {
+        transform: translateY(-20px) rotate(180deg);
+        opacity: 0.8;
+    }
+}
+
+/* 品牌信息 */
+.brand-info {
+    animation: fade-in 1s ease-out 0.3s both;
+}
+
+@keyframes fade-in {
+    from {
+        opacity: 0;
+        transform: scale(0.9);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+.brand-logo {
+    width: 100px;
+    height: 100px;
+    margin: 0 auto 2rem;
+    background: rgba(255, 255, 255, 0.15);
+    border-radius: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.2);
+    color: white;
+}
+
+.animated-logo svg {
+    width: 60px;
+    height: 60px;
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.2));
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.05); }
+}
+
+.brand-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: white;
+    margin-bottom: 0.5rem;
+    text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+}
+
+.brand-tagline {
+    font-size: 1rem;
+    color: rgba(255, 255, 255, 0.8);
+    font-weight: 300;
+}
+
+/* ==================== 右侧表单区 ==================== */
+.card-form {
+    padding: 3rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.form-header {
+    margin-bottom: 2.5rem;
+}
+
+.form-title {
+    font-size: 2rem;
+    font-weight: 700;
+    color: var(--text-primary);
+    margin-bottom: 0.5rem;
+    display: flex;
+    align-items: center;
+    position: relative;
+}
+
+.title-text {
+    position: relative;
+    z-index: 1;
+}
+
+.title-wave {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 100%;
+    height: 3px;
+    background: linear-gradient(90deg, var(--primary-color), var(--secondary-color), var(--accent-color));
+    background-size: 200% 100%;
+    animation: wave 2s linear infinite;
+}
+
+@keyframes wave {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 200% 0%; }
+}
+
+.form-subtitle {
+    color: var(--text-secondary);
+    font-size: 0.95rem;
+    font-weight: 400;
+}
+
+/* ==================== 输入框 ==================== */
+.input-group {
+    margin-bottom: 1.5rem;
+}
+
+.input-wrapper {
+    position: relative;
+    display: flex;
+    align-items: center;
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-radius: 12px;
+    transition: all var(--transition-normal);
+}
+
+.input-wrapper:hover {
+    background: rgba(255, 255, 255, 0.1);
+    border-color: rgba(255, 255, 255, 0.2);
+}
+
+.input-wrapper.focused {
+    background: rgba(255, 255, 255, 0.12);
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(99, 102, 241, 0.15);
+}
+
+.input-icon {
+    position: absolute;
+    left: 1rem;
+    color: rgba(255, 255, 255, 0.5);
+    transition: color var(--transition-fast);
+    z-index: 2;
+}
+
+.input-wrapper.focused .input-icon {
+    color: var(--primary-color);
+}
+
+.input-field {
+    width: 100%;
+    padding: 1rem 1rem 1rem 3rem;
+    background: transparent;
+    border: none;
+    border-radius: 12px;
+    color: #ffffff;
+    font-size: 1rem;
+    outline: none;
+    font-weight: 400;
+}
+
+.input-field::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+    transition: color var(--transition-normal);
+}
+
+.input-wrapper.focused .input-field::placeholder {
+    color: rgba(255, 255, 255, 0.2);
+}
+
+.password-toggle {
+    position: absolute;
+    right: 1rem;
+    background: none;
+    border: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    padding: 0.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: color var(--transition-fast);
+    z-index: 2;
+}
+
+.password-toggle:hover {
+    color: var(--text-primary);
+}
+
+/* ==================== 复选框 ==================== */
+.form-options {
+    margin-bottom: 2rem;
+}
+
+.checkbox-wrapper {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+    user-select: none;
+}
+
+.checkbox-input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.checkbox-custom {
+    width: 20px;
+    height: 20px;
+    border: 2px solid rgba(255, 255, 255, 0.3);
+    border-radius: 6px;
+    margin-right: 0.75rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all var(--transition-fast);
+    position: relative;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.checkbox-wrapper:hover .checkbox-custom {
+    border-color: rgba(255, 255, 255, 0.5);
+    background: rgba(255, 255, 255, 0.08);
+}
+
+.checkbox-input:checked ~ .checkbox-custom {
+    background: var(--primary-color);
+    border-color: var(--primary-color);
+}
+
+.checkbox-custom .checkmark {
+    opacity: 0;
+    transform: scale(0);
+    transition: all var(--transition-fast);
+}
+
+.checkbox-input:checked ~ .checkbox-custom .checkmark {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.checkbox-label {
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 0.9rem;
+}
+
+/* ==================== 提交按钮 ==================== */
+.submit-btn {
+    width: 100%;
+    padding: 1rem;
+    background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+    border: none;
+    border-radius: 12px;
+    color: white;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+    overflow: hidden;
+    transition: all var(--transition-normal);
+    box-shadow: 0 4px 15px var(--primary-glow);
+}
+
+.submit-btn::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.2);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+.submit-btn:hover::before {
+    width: 300px;
+    height: 300px;
+}
+
+.submit-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 25px var(--primary-glow);
+}
+
+.submit-btn:active {
+    transform: translateY(0);
+}
+
+.btn-text,
+.btn-arrow {
+    position: relative;
+    z-index: 1;
+}
+
+.btn-progress {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    height: 3px;
+    width: 0;
+    background: rgba(255, 255, 255, 0.5);
+    transition: width var(--transition-normal);
+}
+
+.submit-btn.loading .btn-progress {
+    width: 100%;
+    animation: progress 1.5s ease-in-out infinite;
+}
+
+@keyframes progress {
+    0% { width: 0; }
+    50% { width: 100%; }
+    100% { width: 0; margin-left: 100%; }
+}
+
+.submit-btn.loading .btn-text {
+    animation: pulse-text 1s ease-in-out infinite;
+}
+
+@keyframes pulse-text {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.5; }
+}
+
+/* ==================== 底部链接 ==================== */
+.form-footer {
+    margin-top: 2rem;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    color: rgba(255, 255, 255, 0.3);
+}
+
+.divider span {
+    flex: 1;
+    height: 1px;
+    background: rgba(255, 255, 255, 0.1);
+}
+
+.divider em {
+    padding: 0 1rem;
+    font-style: normal;
+    font-size: 0.85rem;
+}
+
+.footer-links {
+    display: flex;
+    gap: 0.75rem;
+    flex-wrap: wrap;
+}
+
+.footer-link {
+    flex: 1;
+    min-width: 0;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    color: rgba(255, 255, 255, 0.7);
+    text-decoration: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 500;
+    transition: all var(--transition-normal);
+    background: rgba(255, 255, 255, 0.05);
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    position: relative;
+    overflow: hidden;
+}
+
+.footer-link::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+    transition: left 0.5s ease;
+}
+
+.footer-link:hover::before {
+    left: 100%;
+}
+
+.footer-link:hover {
+    color: #ffffff;
+    background: rgba(255, 255, 255, 0.12);
+    border-color: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.footer-link svg {
+    flex-shrink: 0;
+    opacity: 0.7;
+    transition: all var(--transition-normal);
+}
+
+.footer-link:hover svg {
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+/* ==================== 页脚 ==================== */
+.login-footer {
+    text-align: center;
+    margin-top: 2rem;
+    color: var(--text-muted);
+    font-size: 0.85rem;
+}
+
+/* ==================== 响应式设计 ==================== */
+@media (max-width: 768px) {
+    .login-wrapper {
+        padding: 1rem;
+    }
+
+    .glass-card {
+        grid-template-columns: 1fr;
+        min-height: auto;
+    }
+
+    .card-decoration {
+        display: none;
+    }
+
+    .card-form {
+        padding: 2rem;
+    }
+
+    .form-title {
+        font-size: 1.5rem;
+    }
+
+    .brand-title {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .card-form {
+        padding: 1.5rem;
+    }
+
+    .form-title {
+        font-size: 1.25rem;
+    }
+
+    .footer-links {
+        flex-direction: column;
+    }
+
+    .footer-link {
+        width: 100%;
+        justify-content: center;
+    }
+}
