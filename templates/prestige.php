@@ -29,9 +29,9 @@ if (!isset($rememberName)) {
     <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/assets/css/prestige.css">
     <style>
         :root {
-            --primary-color: <?php echo $config['primaryColor']; ?>;
-            --primary-light: <?php echo $config['primaryColor']; ?>20;
-            --primary-lighter: <?php echo $config['primaryColor']; ?>10;
+            --primary-color: #4f46e5;
+            --primary-light: #4f46e520;
+            --primary-lighter: #4f46e510;
         }
     </style>
 </head>
@@ -61,7 +61,9 @@ if (!isset($rememberName)) {
                             <img src="<?php echo htmlspecialchars($config['iconUrl']); ?>" alt="<?php echo htmlspecialchars($config['siteTitle']); ?>" />
                         <?php else: ?>
                             <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                <?php echo $config['iconSvg']; ?>
+                                <path d="M12 2L2 7L12 12L22 7L12 2Z" fill="currentColor"/>
+                                <path d="M2 17L12 22L22 17" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+                                <path d="M2 12L12 17L22 12" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
                             </svg>
                         <?php endif; ?>
                     </div>
