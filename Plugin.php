@@ -66,7 +66,8 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
         $template = new Typecho_Widget_Helper_Form_Element_Select(
             'template',
             [
-                'default' => _t('简约现代 - 单卡片居中布局，圆形背景装饰'),
+                'default' => _t('暗黑简约 - 深色主题，支持亮白/暗黑切换，极简设计'),
+                'simple' => _t('简约现代 - 单卡片居中布局，圆形背景装饰'),
                 'aurora' => _t('极光风格 - 双栏布局，极光背景动画，玻璃态设计'),
                 'prestige' => _t('大气庄重 - 浅色系配色，渐变背景，现代简洁'),
                 'brutal' => _t('新野兽派 - 粗边框硬阴影，高对比度，大胆几何'),
