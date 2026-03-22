@@ -9,13 +9,15 @@ GateLogin/
 │   ├── default.php        # 默认模板（简约现代风格）
 │   ├── aurora.php         # 极光风格模板
 │   ├── prestige.php       # 大气庄重模板
-│   └── brutal.php         # 新野兽派模板
+│   ├── brutal.php         # 新野兽派模板
+│   └── tech.php           # 科技感模板
 ├── assets/                # 全局资源目录
 │   └── css/               # 样式文件
 │       ├── default.css    # 默认模板样式
 │       ├── aurora.css     # 极光模板样式
 │       ├── prestige.css   # 大气庄重模板样式
-│       └── brutal.css     # 新野兽派模板样式
+│       ├── brutal.css     # 新野兽派模板样式
+│       └── tech.css       # 科技感模板样式
 │
 └── STRUCTURE.md           # 本文档（项目结构说明）
 ```
@@ -49,6 +51,7 @@ templates/
 | **aurora** | `templates/aurora.php` | 极光背景动画、玻璃态设计、流星效果、双栏响应式布局 |
 | **prestige** | `templates/prestige.php` | 大气庄重、浅色系配色（蓝色/青色）、渐变背景、现代简洁设计 |
 | **brutal** | `templates/brutal.php` | 新野兽派、粗边框硬阴影、高对比度、大胆几何形状、独特视觉风格 |
+| **tech** | `templates/tech.php` | 科技未来感、赛博朋克风格、霓虹光效、动态网格、粒子动画 |
 
 ## 模板开发指南
 
@@ -222,12 +225,11 @@ include __DIR__ . '/templates/' . $template . '.php';
 
 - [x] **prestige** - 大气庄重风格（已完成）
 - [x] **brutal** - 新野兽派风格（已完成）
+- [x] **tech** - 科技未来感风格（已完成）
 - [ ] **minimal** - 极简黑白风格
-- [ ] **neon** - 霓虹灯赛博朋克风格
 - [ ] **nature** - 自然风光主题
 - [ ] **gradient** - 纯渐变背景风格
 - [ ] **glass** - 纯玻璃态设计
-- [ ] **dark** - 深色模式专用
 
 ### 功能扩展
 
@@ -245,6 +247,7 @@ include __DIR__ . '/templates/' . $template . '.php';
 - ✨ 添加极光风格模板（Aurora）
 - ✨ 添加大气庄重模板（Prestige）
 - ✨ 添加新野兽派模板（Brutal）
+- ✨ 添加科技未来感模板（Tech）
 - ✨ 统一模板文件命名和目录结构
 - ✨ 统一资源文件到 assets/css 目录
 - ✨ 完善响应式设计
