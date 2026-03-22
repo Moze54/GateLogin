@@ -8,9 +8,12 @@ GateLogin/
 ├── templates/             # 模板目录
 │   ├── default.php        # 默认模板（简约现代风格）
 │   ├── aurora.php         # 极光风格模板
-│   └── assets/            # 模板资源目录
+│   └── prestige.php       # 大气庄重模板
+├── assets/                # 全局资源目录
+│   └── css/               # 样式文件
 │       ├── default.css    # 默认模板样式
-│       └── aurora.css     # 极光模板样式
+│       ├── aurora.css     # 极光模板样式
+│       └── prestige.css   # 大气庄重模板样式
 │
 └── STRUCTURE.md           # 本文档（项目结构说明）
 ```
@@ -42,16 +45,17 @@ templates/
 |---------|------|---------|
 | **default** | `templates/default.php` | 简约现代、圆形背景装饰、渐变色主题、单卡片居中布局 |
 | **aurora** | `templates/aurora.php` | 极光背景动画、玻璃态设计、流星效果、双栏响应式布局 |
+| **prestige** | `templates/prestige.php` | 大气庄重、浅色系配色（蓝色/青色）、渐变背景、现代简洁设计 |
 
 ## 模板开发指南
 
 ### 创建新模板
 
 1. 在 `templates/` 目录下创建新的 PHP 文件（如 `my-template.php`）
-2. 在 `templates/assets/` 目录下创建对应的 CSS 文件（如 `my-template.css`）
+2. 在 `assets/css/` 目录下创建对应的 CSS 文件（如 `my-template.css`）
 3. 在模板中引用样式文件：
    ```php
-   <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/templates/assets/my-template.css">
+   <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/assets/css/my-template.css">
    ```
 
 ### 可用变量
@@ -192,13 +196,14 @@ $template = new Typecho_Widget_Helper_Form_Element_Select(
     'template',
     [
         'default' => '简约现代',
-        'aurora' => '极光风格'
+        'aurora' => '极光风格',
+        'prestige' => '大气庄重'
     ],
     'default',
     _t('登录模板'),
     _t('选择登录页面的显示模板')
 );
-$form->addInput($template->multicodeMode()->addRule('enum', _t('模板必须在可选列表中'), ['default', 'aurora']));
+$form->addInput($template->multicodeMode()->addRule('enum', _t('模板必须在可选列表中'), ['default', 'aurora', 'prestige']));
 ```
 
 然后在 `render()` 方法中使用：
@@ -212,6 +217,7 @@ include __DIR__ . '/templates/' . $template . '.php';
 
 ### 计划中的模板
 
+- [x] **prestige** - 大气庄重风格（已完成）
 - [ ] **minimal** - 极简黑白风格
 - [ ] **neon** - 霓虹灯赛博朋克风格
 - [ ] **nature** - 自然风光主题
@@ -233,6 +239,7 @@ include __DIR__ . '/templates/' . $template . '.php';
 ### 2025-03-22
 - ✨ 创建项目结构
 - ✨ 添加极光风格模板（Aurora）
+- ✨ 添加大气庄重模板（Prestige）
 - ✨ 统一模板文件命名和目录结构
 - ✨ 完善响应式设计
 - ✨ 添加多种动画效果

@@ -67,7 +67,8 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             'template',
             [
                 'default' => _t('简约现代 - 单卡片居中布局，圆形背景装饰'),
-                'aurora' => _t('极光风格 - 双栏布局，极光背景动画，玻璃态设计')
+                'aurora' => _t('极光风格 - 双栏布局，极光背景动画，玻璃态设计'),
+                'prestige' => _t('大气庄重 - 浅色系配色，渐变背景，现代简洁')
             ],
             'default',
             _t('登录模板'),

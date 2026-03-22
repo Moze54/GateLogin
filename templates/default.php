@@ -19,7 +19,7 @@ if (!isset($rememberName)) {
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
         <title><?php _e('登录 - %s', $options->title); ?></title>
         <meta name="robots" content="noindex, nofollow">
-        <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/templates/assets/default.css">
+        <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/assets/css/default.css">
         <style>
             :root {
                 --primary-color: <?php echo $config['primaryColor']; ?>;
