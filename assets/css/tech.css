@@ -126,8 +126,7 @@
 html,
 body {
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100vh;
 }
 
 .tech-body {
@@ -139,8 +138,7 @@ body {
     "Segoe UI",
     sans-serif;
   width: 100%;
-  height: 100%;
-  overflow: hidden;
+  min-height: 100vh;
   position: relative;
   background: var(--color-black);
   color: #ffffff;
@@ -330,9 +328,8 @@ body {
   position: relative;
   z-index: 1;
   width: 100%;
-  height: 100%;
+  min-height: 100vh;
   display: flex;
-  overflow: hidden;
   background: transparent;
 }
 
@@ -1188,6 +1185,20 @@ body {
 }
 
 @media (max-width: 480px) {
+  html, body {
+    height: auto;
+  }
+
+  .tech-body {
+    height: auto;
+  }
+
+  .tech-wrapper {
+    display: block;
+    height: auto;
+    min-height: auto;
+  }
+
   .tech-decor {
     padding: 30px 20px;
     min-height: 40vh;

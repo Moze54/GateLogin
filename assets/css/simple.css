@@ -19,7 +19,6 @@ body.body-100 {
     padding: 20px;
     background: linear-gradient(135deg, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
     position: relative;
-    overflow: hidden;
 }
 
 /* ========== 背景装饰 ========== */
@@ -501,7 +500,9 @@ body.body-100 {
 /* ========== 响应式设计 ========== */
 @media (max-width: 480px) {
     body.body-100 {
+        display: block;
         padding: 16px;
+        align-items: flex-start;
     }
 
     .login-card {
@@ -537,6 +538,10 @@ body.body-100 {
 }
 
 @media (max-width: 380px) {
+    body.body-100 {
+        padding: 12px;
+    }
+
     .login-card {
         padding: 24px 20px;
     }

@@ -69,15 +69,13 @@
 
 html, body {
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100vh;
 }
 
 .brutal-body {
     font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
     width: 100%;
-    height: 100%;
-    overflow: hidden;
+    min-height: 100vh;
     background: var(--color-white);
     color: var(--color-black);
 }
@@ -167,12 +165,11 @@ html, body {
     position: relative;
     z-index: 1;
     width: 100%;
-    height: 100%;
+    min-height: 100vh;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     padding: 60px 100px;
-    overflow: hidden;
 }
 
 /* ===== 左侧装饰区域 ===== */
@@ -748,8 +745,19 @@ html, body {
 }
 
 @media (max-width: 480px) {
+    html, body {
+        height: auto;
+    }
+
+    .brutal-body {
+        height: auto;
+    }
+
     .brutal-wrapper {
+        display: block;
         padding: 20px 16px;
+        height: auto;
+        min-height: auto;
     }
 
     .card-logo {
