@@ -6,7 +6,7 @@ if (!defined('__TYPECHO_ROOT_DIR__')) exit;
  *
  * @package GateLogin
  * @author 优优
- * @version 1.0.0
+ * @version 1.1.0
  * @link https://github.com/Moze54/GateLogin
  */
 class GateLogin_Plugin implements Typecho_Plugin_Interface
@@ -338,6 +338,52 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
     }
 
     /**
+     * 验证并过滤 URL
+     *
+     * @param string $url 待验证的 URL
+     * @return string 验证后的 URL 或空字符串
+     */
+    private static function validateUrl($url)
+    {
+        if (empty($url)) {
+            return '';
+        }
+
+        // 基本URL格式验证
+        if (!filter_var($url, FILTER_VALIDATE_URL)) {
+            return '';
+        }
+
+        // 只允许 http 和 https 协议
+        $parsed = parse_url($url);
+        if ($parsed && isset($parsed['scheme']) && !in_array($parsed['scheme'], ['http', 'https'], true)) {
+            return '';
+        }
+
+        return $url;
+    }
+
+    /**
+     * 验证模板名称（白名单检查）
+     *
+     * @param string $templateName 模板名称
+     * @return string 验证后的模板名称
+     */
+    private static function validateTemplateName($templateName)
+    {
+        // 模板白名单
+        $allowedTemplates = ['default', 'simple', 'aurora', 'prestige', 'brutal', 'tech'];
+
+        // 检查是否在白名单中
+        if (in_array($templateName, $allowedTemplates, true)) {
+            return $templateName;
+        }
+
+        // 不在白名单中，返回默认模板
+        return 'default';
+    }
+
+    /**
      * 渲染自定义登录页面
      *
      * 通过钩子拦截 admin/login.php，渲染自定义页面
@@ -362,6 +408,11 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             $pluginOptions = null;
         }
 
+        // 获取并验证图标 URL
+        $iconUrl = ($pluginOptions && isset($pluginOptions->iconUrl) && !empty($pluginOptions->iconUrl))
+            ? self::validateUrl($pluginOptions->iconUrl)
+            : '';
+
         // 准备配置变量，使用默认值如果未配置
         $config = array(
             'siteTitle' => ($pluginOptions && isset($pluginOptions->siteTitle) && !empty($pluginOptions->siteTitle))
@@ -373,11 +424,9 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             'footerText' => ($pluginOptions && isset($pluginOptions->footerText) && !empty($pluginOptions->footerText))
                 ? $pluginOptions->footerText
                 : '',
-            'iconUrl' => ($pluginOptions && isset($pluginOptions->iconUrl) && !empty($pluginOptions->iconUrl))
-                ? $pluginOptions->iconUrl
-                : '',
+            'iconUrl' => $iconUrl,
             'template' => ($pluginOptions && isset($pluginOptions->template) && !empty($pluginOptions->template))
-                ? $pluginOptions->template
+                ? self::validateTemplateName($pluginOptions->template)
                 : 'default'
         );
 
@@ -407,11 +456,11 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
             // 设置 body class 用于样式
             $bodyClass = 'body-100';
 
-            // 获取选择的模板
+            // 获取选择的模板（已通过白名单验证）
             $templateName = $config['template'];
             $templateFile = dirname(__FILE__) . '/templates/' . $templateName . '.php';
 
-            // 安全检查：确保模板文件存在
+            // 安全检查：确保模板文件存在（双重保护）
             if (!file_exists($templateFile)) {
                 $templateFile = dirname(__FILE__) . '/templates/default.php';
             }

@@ -5,83 +5,83 @@
 
 /* ===== 本地字体 ===== */
 @font-face {
-    font-family: 'Orbitron';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('../fonts/Orbitron-Regular.ttf') format('truetype');
+  font-family: "Orbitron";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Orbitron-Regular.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Orbitron';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url('../fonts/Orbitron-Medium.ttf') format('truetype');
+  font-family: "Orbitron";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/Orbitron-Medium.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Orbitron';
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: url('../fonts/Orbitron-SemiBold.ttf') format('truetype');
+  font-family: "Orbitron";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/Orbitron-SemiBold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Orbitron';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('../fonts/Orbitron-Bold.ttf') format('truetype');
+  font-family: "Orbitron";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/Orbitron-Bold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Orbitron';
-    font-style: normal;
-    font-weight: 900;
-    font-display: swap;
-    src: url('../fonts/Orbitron-Black.ttf') format('truetype');
+  font-family: "Orbitron";
+  font-style: normal;
+  font-weight: 900;
+  font-display: swap;
+  src: url("../fonts/Orbitron-Black.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Rajdhani';
-    font-style: normal;
-    font-weight: 300;
-    font-display: swap;
-    src: url('../fonts/Rajdhani-Light.ttf') format('truetype');
+  font-family: "Rajdhani";
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+  src: url("../fonts/Rajdhani-Light.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Rajdhani';
-    font-style: normal;
-    font-weight: 400;
-    font-display: swap;
-    src: url('../fonts/Rajdhani-Regular.ttf') format('truetype');
+  font-family: "Rajdhani";
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+  src: url("../fonts/Rajdhani-Regular.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Rajdhani';
-    font-style: normal;
-    font-weight: 500;
-    font-display: swap;
-    src: url('../fonts/Rajdhani-Medium.ttf') format('truetype');
+  font-family: "Rajdhani";
+  font-style: normal;
+  font-weight: 500;
+  font-display: swap;
+  src: url("../fonts/Rajdhani-Medium.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Rajdhani';
-    font-style: normal;
-    font-weight: 600;
-    font-display: swap;
-    src: url('../fonts/Rajdhani-SemiBold.ttf') format('truetype');
+  font-family: "Rajdhani";
+  font-style: normal;
+  font-weight: 600;
+  font-display: swap;
+  src: url("../fonts/Rajdhani-SemiBold.ttf") format("truetype");
 }
 
 @font-face {
-    font-family: 'Rajdhani';
-    font-style: normal;
-    font-weight: 700;
-    font-display: swap;
-    src: url('../fonts/Rajdhani-Bold.ttf') format('truetype');
+  font-family: "Rajdhani";
+  font-style: normal;
+  font-weight: 700;
+  font-display: swap;
+  src: url("../fonts/Rajdhani-Bold.ttf") format("truetype");
 }
 
 /* ===== CSS 变量 ===== */
@@ -90,6 +90,9 @@
   --color-black: #0a0a0f;
   --color-dark: #12121a;
   --color-darker: #0d0d14;
+
+  /* 主色调 */
+  --primary-color: #00f0ff;
 
   /* 霓虹色 */
   --neon-cyan: #00f0ff;
@@ -605,7 +608,8 @@ body {
   box-shadow: var(--glow-cyan);
   width: 100%;
   max-width: 360px;
-  height: 480px;
+  min-height: 400px;
+  max-height: 520px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
@@ -924,7 +928,9 @@ body {
 .checkbox-input:checked + .checkbox-box {
   background: rgba(0, 240, 255, 0.25);
   border-color: var(--primary-color);
-  box-shadow: 0 0 15px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.2);
+  box-shadow:
+    0 0 15px rgba(0, 240, 255, 0.5),
+    inset 0 0 10px rgba(0, 240, 255, 0.2);
 }
 
 .checkbox-input:checked + .checkbox-box .check-icon {
