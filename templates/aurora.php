@@ -12,6 +12,13 @@
 if (!isset($rememberName)) {
     $rememberName = '';
 }
+if (!isset($rememberMail)) {
+    $rememberMail = '';
+}
+if (!isset($pageType)) {
+    $pageType = 'login';
+}
+$isRegister = ($pageType === 'register');
 ?>
 <!DOCTYPE HTML>
 <html lang="zh-CN">
@@ -20,7 +27,7 @@ if (!isset($rememberName)) {
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php _e('登录 - %s', $options->title); ?></title>
+    <title><?php echo $isRegister ? '注册' : '登录'; ?> - <?php $options->title(); ?></title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -79,12 +86,54 @@ if (!isset($rememberName)) {
             <div class="card-form">
                 <div class="form-header">
                     <h1 class="form-title">
-                        <span class="title-text">欢迎回来</span>
+                        <span class="title-text"><?php echo $isRegister ? '创建账号' : '欢迎回来'; ?></span>
                         <span class="title-wave"></span>
                     </h1>
-                    <p class="form-subtitle">登录以继续您的创作之旅</p>
+                    <p class="form-subtitle"><?php echo $isRegister ? '注册以开启您的创作之旅' : '登录以继续您的创作之旅'; ?></p>
                 </div>
 
+                <?php if ($isRegister): ?>
+                <!-- 注册表单 -->
+                <form action="<?php $options->registerAction(); ?>" method="post" name="register" role="form" class="login-form" id="loginForm">
+                    <!-- 用户名输入 -->
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            <input type="text" id="name" name="name" value="<?php echo $rememberName; ?>"
+                                   placeholder="用户名" class="input-field" autocomplete="username" required />
+                        </div>
+                    </div>
+
+                    <!-- 邮箱输入 -->
+                    <div class="input-group">
+                        <div class="input-wrapper">
+                            <svg class="input-icon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            <input type="email" id="mail" name="mail" value="<?php echo $rememberMail; ?>"
+                                   placeholder="邮箱" class="input-field" autocomplete="email" required />
+                        </div>
+                    </div>
+
+                    <!-- 注册按钮 -->
+                    <button type="submit" class="submit-btn" id="submitBtn">
+                        <span class="btn-text">注册</span>
+                        <span class="btn-progress"></span>
+                        <svg class="btn-arrow" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <line x1="20" y1="8" x2="20" y2="14"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                    </button>
+                    <input type="hidden" name="referer" value="<?php echo $request->filter('html')->get('referer'); ?>" />
+                </form>
+                <?php else: ?>
+                <!-- 登录表单 -->
                 <form action="<?php $options->loginAction(); ?>" method="post" name="login" role="form" class="login-form" id="loginForm">
                     <!-- 用户名输入 -->
                     <div class="input-group">
@@ -144,6 +193,7 @@ if (!isset($rememberName)) {
                     </button>
                     <input type="hidden" name="referer" value="<?php echo $request->filter('html')->get('referer'); ?>" />
                 </form>
+                <?php endif; ?>
 
                 <!-- 底部链接 -->
                 <div class="form-footer">
@@ -153,7 +203,16 @@ if (!isset($rememberName)) {
                         <span></span>
                     </div>
                     <div class="footer-links">
-                        <?php if($options->allowRegister): ?>
+                        <?php if($isRegister): ?>
+                            <a href="<?php $options->loginUrl(); ?>" class="footer-link">
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                                    <polyline points="10 17 15 12 10 7"/>
+                                    <line x1="15" y1="12" x2="3" y2="12"/>
+                                </svg>
+                                返回登录
+                            </a>
+                        <?php elseif($options->allowRegister): ?>
                             <a href="<?php $options->registerUrl(); ?>" class="footer-link">
                                 <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                                     <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
@@ -208,13 +267,15 @@ document.addEventListener('DOMContentLoaded', function() {
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
 
-    togglePassword.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
 
-        document.querySelector('.eye-open').style.display = type === 'password' ? 'block' : 'none';
-        document.querySelector('.eye-closed').style.display = type === 'password' ? 'none' : 'block';
-    });
+            document.querySelector('.eye-open').style.display = type === 'password' ? 'block' : 'none';
+            document.querySelector('.eye-closed').style.display = type === 'password' ? 'none' : 'block';
+        });
+    }
 
     // 表单提交动画
     const loginForm = document.getElementById('loginForm');

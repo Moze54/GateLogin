@@ -8,11 +8,20 @@
  * - 优雅的过渡动画
  * - 完全响应式设计
  * - 清爽的视觉体验
+ * - 支持登录和注册页面
  */
 
 if (!isset($rememberName)) {
     $rememberName = '';
 }
+if (!isset($rememberMail)) {
+    $rememberMail = '';
+}
+if (!isset($pageType)) {
+    $pageType = 'login';
+}
+
+$isRegister = ($pageType === 'register');
 ?>
 <!DOCTYPE HTML>
 <html lang="zh-CN">
@@ -21,7 +30,7 @@ if (!isset($rememberName)) {
     <meta name="renderer" content="webkit">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <title><?php _e('登录 - %s', $options->title); ?></title>
+    <title><?php echo $isRegister ? '注册' : '登录'; ?> - <?php $options->title(); ?></title>
     <meta name="robots" content="noindex, nofollow">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -86,8 +95,50 @@ if (!isset($rememberName)) {
                 <div class="divider-line"></div>
             </div>
 
-            <!-- 登录表单 -->
+            <!-- 登录/注册表单 -->
             <div class="card-form">
+                <?php if ($isRegister): ?>
+                <!-- 注册表单 -->
+                <form action="<?php $options->registerAction(); ?>" method="post" name="register" role="form" class="login-form" id="loginForm">
+                    <!-- 用户名 -->
+                    <div class="form-group">
+                        <label class="form-label" for="name">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                                <circle cx="12" cy="7" r="4"/>
+                            </svg>
+                            用户名
+                        </label>
+                        <input type="text" id="name" name="name" value="<?php echo $rememberName; ?>"
+                               class="form-input" placeholder="请输入用户名" autocomplete="username" required autofocus />
+                    </div>
+
+                    <!-- 邮箱 -->
+                    <div class="form-group">
+                        <label class="form-label" for="mail">
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                                <polyline points="22,6 12,13 2,6"/>
+                            </svg>
+                            邮箱
+                        </label>
+                        <input type="email" id="mail" name="mail" value="<?php echo $rememberMail; ?>"
+                               class="form-input" placeholder="请输入邮箱地址" autocomplete="email" required />
+                    </div>
+
+                    <!-- 注册按钮 -->
+                    <button type="submit" class="submit-button" id="submitBtn">
+                        <span class="button-text">注册</span>
+                        <svg class="button-icon" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                            <circle cx="8.5" cy="7" r="4"/>
+                            <line x1="20" y1="8" x2="20" y2="14"/>
+                            <line x1="23" y1="11" x2="17" y2="11"/>
+                        </svg>
+                    </button>
+                </form>
+                <?php else: ?>
+                <!-- 登录表单 -->
                 <form action="<?php $options->loginAction(); ?>" method="post" name="login" role="form" class="login-form" id="loginForm">
                     <!-- 用户名 -->
                     <div class="form-group">
@@ -150,12 +201,18 @@ if (!isset($rememberName)) {
                     </button>
                     <input type="hidden" name="referer" value="<?php echo $request->filter('html')->get('referer'); ?>" />
                 </form>
+                <?php endif; ?>
             </div>
 
             <!-- 底部链接 -->
             <div class="card-footer">
                 <div class="footer-links">
-                    <?php if($options->allowRegister): ?>
+                    <?php if($isRegister): ?>
+                        <a href="<?php $options->loginUrl(); ?>" class="footer-link">
+                            返回登录
+                        </a>
+                        <span class="footer-dot">·</span>
+                    <?php elseif($options->allowRegister): ?>
                         <a href="<?php $options->registerUrl(); ?>" class="footer-link">
                             注册账号
                         </a>
@@ -218,26 +275,29 @@ document.addEventListener('DOMContentLoaded', function() {
         document.getElementById('name').focus();
     }, 300);
 
-    // 密码显示/隐藏
+    // 密码显示/隐藏（仅登录页面）
     const togglePassword = document.getElementById('togglePassword');
     const passwordInput = document.getElementById('password');
 
-    togglePassword.addEventListener('click', function() {
-        const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
-        passwordInput.setAttribute('type', type);
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener('click', function() {
+            const type = passwordInput.getAttribute('type') === 'password' ? 'text' : 'password';
+            passwordInput.setAttribute('type', type);
 
-        document.querySelector('.eye-open').style.display = type === 'password' ? 'block' : 'none';
-        document.querySelector('.eye-closed').style.display = type === 'password' ? 'none' : 'block';
-    });
+            document.querySelector('.eye-open').style.display = type === 'password' ? 'block' : 'none';
+            document.querySelector('.eye-closed').style.display = type === 'password' ? 'none' : 'block';
+        });
+    }
 
     // 表单提交效果
     const loginForm = document.getElementById('loginForm');
     const submitBtn = document.getElementById('submitBtn');
+    const isRegisterPage = <?php echo $isRegister ? 'true' : 'false'; ?>;
 
     loginForm.addEventListener('submit', function(e) {
         submitBtn.classList.add('submitting');
         submitBtn.disabled = true;
-        submitBtn.querySelector('.button-text').textContent = '登录中...';
+        submitBtn.querySelector('.button-text').textContent = isRegisterPage ? '注册中...' : '登录中...';
     });
 
     // 输入框聚焦效果

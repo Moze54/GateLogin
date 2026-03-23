@@ -10,6 +10,14 @@
 if (!isset($rememberName)) {
     $rememberName = '';
 }
+if (!isset($rememberMail)) {
+    $rememberMail = '';
+}
+if (!isset($pageType)) {
+    $pageType = 'login';
+}
+
+$isRegister = ($pageType === 'register');
 ?>
 <!DOCTYPE HTML>
 <html>
@@ -17,7 +25,7 @@ if (!isset($rememberName)) {
         <meta charset="<?php $options->charset(); ?>">
         <meta name="renderer" content="webkit">
         <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
-        <title><?php _e('登录 - %s', $options->title); ?></title>
+        <title><?php echo $isRegister ? '注册' : '登录'; ?> - <?php $options->title(); ?></title>
         <meta name="robots" content="noindex, nofollow">
         <link rel="stylesheet" href="<?php echo $options->pluginUrl; ?>/GateLogin/assets/css/simple.css">
         <style>
@@ -58,13 +66,58 @@ if (!isset($rememberName)) {
         </div>
     </div>
 
-    <!-- 登录卡片 -->
+    <!-- 登录/注册卡片 -->
     <div class="login-card">
         <div class="card-header">
-            <h2 class="card-title">欢迎回来</h2>
-            <p class="card-desc">登录以继续管理您的内容</p>
+            <h2 class="card-title"><?php echo $isRegister ? '创建新账号' : '欢迎回来'; ?></h2>
+            <p class="card-desc"><?php echo $isRegister ? '填写信息以注册新账号' : '登录以继续管理您的内容'; ?></p>
         </div>
 
+        <?php if ($isRegister): ?>
+        <!-- 注册表单 -->
+        <form action="<?php $options->registerAction(); ?>" method="post" name="register" role="form" class="login-form">
+            <div class="form-group">
+                <label for="name" class="form-label">
+                    <span class="label-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/>
+                            <circle cx="12" cy="7" r="4"/>
+                        </svg>
+                    </span>
+                    用户名
+                </label>
+                <input type="text" id="name" name="name" value="<?php echo $rememberName; ?>"
+                       placeholder="请输入用户名" class="form-input" autofocus required />
+            </div>
+
+            <div class="form-group">
+                <label for="mail" class="form-label">
+                    <span class="label-icon">
+                        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/>
+                            <polyline points="22,6 12,13 2,6"/>
+                        </svg>
+                    </span>
+                    邮箱
+                </label>
+                <input type="email" id="mail" name="mail" value="<?php echo $rememberMail; ?>"
+                       placeholder="请输入邮箱地址" class="form-input" required />
+            </div>
+
+            <button type="submit" class="submit-btn">
+                <span class="btn-text">注册</span>
+                <span class="btn-icon">
+                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>
+                        <circle cx="8.5" cy="7" r="4"/>
+                        <line x1="20" y1="8" x2="20" y2="14"/>
+                        <line x1="23" y1="11" x2="17" y2="11"/>
+                    </svg>
+                </span>
+            </button>
+        </form>
+        <?php else: ?>
+        <!-- 登录表单 -->
         <form action="<?php $options->loginAction(); ?>" method="post" name="login" role="form" class="login-form">
             <div class="form-group">
                 <label for="name" class="form-label">
@@ -113,13 +166,23 @@ if (!isset($rememberName)) {
             </button>
             <input type="hidden" name="referer" value="<?php echo $request->filter('html')->get('referer'); ?>" />
         </form>
+        <?php endif; ?>
 
         <div class="card-footer">
             <div class="footer-divider">
                 <span>或</span>
             </div>
             <div class="footer-links">
-                <?php if($options->allowRegister): ?>
+                <?php if($isRegister): ?>
+                    <a href="<?php $options->loginUrl(); ?>" class="footer-link">
+                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/>
+                            <polyline points="10 17 15 12 10 7"/>
+                            <line x1="15" y1="12" x2="3" y2="12"/>
+                        </svg>
+                        返回登录
+                    </a>
+                <?php elseif($options->allowRegister): ?>
                     <a href="<?php $options->registerUrl(); ?>" class="footer-link">
                         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
                             <path d="M16 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"/>

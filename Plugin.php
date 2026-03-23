@@ -381,17 +381,28 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
                 : 'default'
         );
 
-        // 检查是否为登录页面
-        if (strpos($currentUrl, '/admin/login.php') !== false && $_SERVER['REQUEST_METHOD'] === 'GET') {
+        // 检查是否为登录页面或注册页面
+        $isLoginPage = strpos($currentUrl, '/admin/login.php') !== false;
+        $isRegisterPage = strpos($currentUrl, '/admin/register.php') !== false;
+
+        if (($isLoginPage || $isRegisterPage) && $_SERVER['REQUEST_METHOD'] === 'GET') {
+            // 注册页面检查是否允许注册
+            if ($isRegisterPage && !$options->allowRegister) {
+                $options->response->redirect($options->siteUrl);
+                exit;
+            }
+
             // 如果已经登录，重定向到后台首页
             if ($user->hasLogin()) {
                 $options->response->redirect($options->adminUrl);
                 exit;
             }
 
-            // 获取上次登录的用户名
+            // 获取上次登录/注册的用户名和邮箱
             $rememberName = htmlspecialchars(\Typecho\Cookie::get('__typecho_remember_name', ''));
+            $rememberMail = htmlspecialchars(\Typecho\Cookie::get('__typecho_remember_mail', ''));
             \Typecho\Cookie::delete('__typecho_remember_name');
+            \Typecho\Cookie::delete('__typecho_remember_mail');
 
             // 设置 body class 用于样式
             $bodyClass = 'body-100';
@@ -405,9 +416,12 @@ class GateLogin_Plugin implements Typecho_Plugin_Interface
                 $templateFile = dirname(__FILE__) . '/templates/default.php';
             }
 
-            // 渲染自定义登录页面
+            // 设置页面类型（登录或注册）
+            $pageType = $isRegisterPage ? 'register' : 'login';
+
+            // 渲染自定义登录/注册页面
             include $templateFile;
-            exit;  // 终止执行，阻止原始 login.php 继续执行
+            exit;  // 终止执行，阻止原始页面继续执行
         }
     }
 }
