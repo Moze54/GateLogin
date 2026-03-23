@@ -3,6 +3,39 @@
  * 粗边框、硬阴影、高对比度、大胆几何形状
  */
 
+/* ===== 本地字体 ===== */
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 400;
+    font-display: swap;
+    src: url('../fonts/SpaceGrotesk-Regular.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 500;
+    font-display: swap;
+    src: url('../fonts/SpaceGrotesk-Medium.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 600;
+    font-display: swap;
+    src: url('../fonts/SpaceGrotesk-SemiBold.ttf') format('truetype');
+}
+
+@font-face {
+    font-family: 'Space Grotesk';
+    font-style: normal;
+    font-weight: 700;
+    font-display: swap;
+    src: url('../fonts/SpaceGrotesk-Bold.ttf') format('truetype');
+}
+
 /* ===== CSS 变量 ===== */
 :root {
     /* 主色调 - 可通过 PHP 覆盖 */
@@ -41,7 +74,7 @@ html, body {
 }
 
 .brutal-body {
-    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+    font-family: 'Space Grotesk', -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Microsoft YaHei', sans-serif;
     width: 100%;
     height: 100%;
     overflow: hidden;
