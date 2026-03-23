@@ -254,8 +254,11 @@ $isRegister = ($pageType === 'register');
     </div>
 
 <?php
-include __TYPECHO_ROOT_DIR__ . '/admin/common-js.php';
+// 手动加载 jQuery（不加载 common-js.php 以避免原生消息提示冲突）
 ?>
+<script src="<?php echo $options->adminStaticUrl('js', 'jquery.js'); ?>"></script>
+<script src="<?php echo $options->adminStaticUrl('js', 'jquery-ui.js'); ?>"></script>
+<script src="<?php echo $options->adminStaticUrl('js', 'typecho.js'); ?>"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function() {
     // 自动聚焦
@@ -311,6 +314,75 @@ document.addEventListener('DOMContentLoaded', function() {
     setTimeout(() => {
         document.querySelector('.prestige-card').classList.add('visible');
     }, 100);
+
+    // 显示消息提示
+    function showMessage(messages, type) {
+        type = type || 'notice';
+        const messageText = Array.isArray(messages) ? messages.join('<br>') : messages;
+
+        const existingMessage = document.querySelector('.gate-message');
+        if (existingMessage) {
+            existingMessage.remove();
+        }
+
+        let iconHtml = '';
+        if (type === 'success') {
+            iconHtml = '<svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>';
+        } else if (type === 'error') {
+            iconHtml = '<svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="15" y1="9" x2="9" y2="15"></line><line x1="9" y1="9" x2="15" y2="15"></line></svg>';
+        } else {
+            iconHtml = '<svg class="message-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>';
+        }
+
+        const messageDiv = document.createElement('div');
+        messageDiv.className = 'gate-message ' + type;
+        messageDiv.innerHTML = `
+            ${iconHtml}
+            <div class="message-content">${messageText}</div>
+            <div class="message-close">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="6" x2="6" y2="18"></line><line x1="6" y1="6" x2="18" y2="18"></line></svg>
+            </div>
+        `;
+
+        document.body.appendChild(messageDiv);
+
+        setTimeout(() => {
+            messageDiv.classList.add('show');
+        }, 10);
+
+        messageDiv.querySelector('.message-close').addEventListener('click', function() {
+            messageDiv.classList.remove('show');
+            setTimeout(() => {
+                messageDiv.remove();
+            }, 300);
+        });
+
+        setTimeout(() => {
+            if (messageDiv.classList.contains('show')) {
+                messageDiv.classList.remove('show');
+                setTimeout(() => {
+                    messageDiv.remove();
+                }, 300);
+            }
+        }, 5000);
+    }
+
+    // 检查并显示 Typecho 的通知消息
+    (function() {
+        if (typeof $ !== 'undefined') {
+            const prefix = '<?php echo \Typecho\Cookie::getPrefix(); ?>';
+            const noticeCookie = $.cookie(prefix + '__typecho_notice');
+            const noticeTypeCookie = $.cookie(prefix + '__typecho_notice_type');
+
+            if (noticeCookie && noticeTypeCookie) {
+                const messages = JSON.parse(noticeCookie);
+                showMessage(messages, noticeTypeCookie);
+
+                $.cookie(prefix + '__typecho_notice', null, {path: '<?php echo \Typecho\Cookie::getPath(); ?>', domain: '<?php echo \Typecho\Cookie::getDomain(); ?>', secure: <?php echo json_encode(\Typecho\Cookie::getSecure()); ?>});
+                $.cookie(prefix + '__typecho_notice_type', null, {path: '<?php echo \Typecho\Cookie::getPath(); ?>', domain: '<?php echo \Typecho\Cookie::getDomain(); ?>', secure: <?php echo json_encode(\Typecho\Cookie::getSecure()); ?>});
+            }
+        }
+    })();
 });
 </script>
 </body>

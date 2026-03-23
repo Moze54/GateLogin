@@ -1301,3 +1301,104 @@ body {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== 消息提示 ===== */
+.gate-message {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    z-index: 9999;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 14px 18px;
+    background: rgba(18, 18, 26, 0.95);
+    backdrop-filter: blur(10px);
+    border: 2px solid rgba(0, 240, 255, 0.3);
+    border-radius: 8px;
+    box-shadow: 0 0 15px rgba(0, 240, 255, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.gate-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.gate-message.success {
+    background: rgba(18, 18, 26, 0.95);
+    border-color: rgba(34, 197, 94, 0.5);
+    box-shadow: 0 0 15px rgba(34, 197, 94, 0.2);
+}
+
+.gate-message.success .message-icon {
+    color: #22c55e;
+}
+
+.gate-message.error {
+    background: rgba(18, 18, 26, 0.95);
+    border-color: rgba(239, 68, 68, 0.5);
+    box-shadow: 0 0 15px rgba(239, 68, 68, 0.2);
+}
+
+.gate-message.error .message-icon {
+    color: #ef4444;
+}
+
+.gate-message.notice {
+    background: rgba(18, 18, 26, 0.95);
+    border-color: rgba(245, 158, 11, 0.5);
+    box-shadow: 0 0 15px rgba(245, 158, 11, 0.2);
+}
+
+.gate-message.notice .message-icon {
+    color: #f59e0b;
+}
+
+.message-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.message-content {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: #ffffff;
+    line-height: 1.5;
+}
+
+.message-close {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    color: var(--primary-color);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.message-close:hover {
+    color: #ffffff;
+    background: rgba(0, 240, 255, 0.2);
+}
+
+@media (max-width: 480px) {
+    .gate-message {
+        min-width: auto;
+        width: calc(100vw - 32px);
+        top: 16px;
+        max-width: none;
+    }
+}

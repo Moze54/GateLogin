@@ -384,19 +384,32 @@
     border-color: var(--primary-color);
     box-shadow: 0 0 0 3px var(--primary-light);
     background: var(--input-bg-focus);
+    outline: none;
 }
 
-/* 亮白模式输入框焦点使用黑色 */
+/* 亮白模式输入框焦点使用灰色 */
 :root[data-theme="light"] .form-input:focus {
-    border-color: #000000 !important;
-    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.1) !important;
+    border-color: #9ca3af !important;
+    box-shadow: 0 0 0 3px rgba(0, 0, 0, 0.08) !important;
     outline: none !important;
 }
 
-/* 亮白模式输入框 focus-visible 也使用黑色 */
+/* 亮白模式输入框 focus-visible 也使用灰色 */
 :root[data-theme="light"] .form-input:focus-visible {
-    outline: 2px solid #000000 !important;
+    outline: 2px solid #9ca3af !important;
     outline-offset: 2px;
+}
+
+/* 暗色模式输入框边框使用白色 */
+:root .form-input:focus {
+    border-color: #ffffff !important;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.25) !important;
+    outline: none !important;
+}
+
+/* 暗色模式输入框 focus-visible */
+:root .form-input:focus-visible {
+    outline: none !important;
 }
 
 .input-wrapper {
@@ -472,8 +485,8 @@
 }
 
 .checkbox-input:checked + .checkbox-custom {
-    background: var(--primary-color);
-    border-color: var(--primary-color);
+    background: #1e293b;
+    border-color: #1e293b;
 }
 
 .checkbox-input:checked + .checkbox-custom .check-icon {
@@ -638,6 +651,20 @@
     outline-offset: 2px;
 }
 
+/* 输入框移除焦点可见性样式 */
+.form-input:focus-visible {
+    outline: none !important;
+}
+
+/* 暗色模式输入框移除外框（更具体的选择器） */
+:root:not([data-theme="light"]) .form-input:focus {
+    outline: none !important;
+}
+
+:root:not([data-theme="light"]) .form-input:focus-visible {
+    outline: none !important;
+}
+
 /* ===== 选择文本样式 ===== */
 ::selection {
     background: rgba(96, 165, 250, 0.3);
@@ -660,4 +687,101 @@
 
 ::-webkit-scrollbar-thumb:hover {
     background: var(--color-border-hover);
+}
+
+/* ===== 消息提示 ===== */
+.gate-message {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    z-index: 9999;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 14px 18px;
+    background: var(--color-card-bg);
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid var(--color-border);
+}
+
+.gate-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.gate-message.success {
+    background: rgba(34, 197, 94, 0.1);
+    border-color: #22c55e;
+}
+
+.gate-message.success .message-icon {
+    color: #22c55e;
+}
+
+.gate-message.error {
+    background: rgba(239, 68, 68, 0.1);
+    border-color: #ef4444;
+}
+
+.gate-message.error .message-icon {
+    color: #ef4444;
+}
+
+.gate-message.notice {
+    background: rgba(245, 158, 11, 0.1);
+    border-color: #f59e0b;
+}
+
+.gate-message.notice .message-icon {
+    color: #f59e0b;
+}
+
+.message-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.message-content {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: var(--color-text);
+    line-height: 1.5;
+}
+
+.message-close {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    color: var(--color-text-secondary);
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.message-close:hover {
+    color: var(--color-text);
+    background: rgba(255, 255, 255, 0.1);
+}
+
+@media (max-width: 480px) {
+    .gate-message {
+        min-width: auto;
+        width: calc(100vw - 32px);
+        top: 16px;
+        max-width: none;
+    }
 }

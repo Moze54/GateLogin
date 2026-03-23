@@ -773,3 +773,100 @@
 .prestige-card::-webkit-scrollbar-thumb:hover {
   background: var(--primary-color);
 }
+
+/* ===== 消息提示 ===== */
+.gate-message {
+    position: fixed;
+    top: 24px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-20px);
+    z-index: 9999;
+    min-width: 280px;
+    max-width: 400px;
+    padding: 14px 18px;
+    background: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+    border: 1px solid #e2e8f0;
+}
+
+.gate-message.show {
+    opacity: 1;
+    visibility: visible;
+    transform: translateX(-50%) translateY(0);
+}
+
+.gate-message.success {
+    background: #f0fdf4;
+    border-color: #86efac;
+}
+
+.gate-message.success .message-icon {
+    color: #22c55e;
+}
+
+.gate-message.error {
+    background: #fef2f2;
+    border-color: #fca5a5;
+}
+
+.gate-message.error .message-icon {
+    color: #ef4444;
+}
+
+.gate-message.notice {
+    background: #fffbeb;
+    border-color: #fcd34d;
+}
+
+.gate-message.notice .message-icon {
+    color: #f59e0b;
+}
+
+.message-icon {
+    flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+}
+
+.message-content {
+    flex: 1;
+    font-size: 14px;
+    font-weight: 400;
+    color: #334155;
+    line-height: 1.5;
+}
+
+.message-close {
+    flex-shrink: 0;
+    width: 18px;
+    height: 18px;
+    cursor: pointer;
+    color: #94a3b8;
+    transition: all 0.2s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    padding: 2px;
+}
+
+.message-close:hover {
+    color: #64748b;
+    background: rgba(0, 0, 0, 0.05);
+}
+
+@media (max-width: 480px) {
+    .gate-message {
+        min-width: auto;
+        width: calc(100vw - 32px);
+        top: 16px;
+        max-width: none;
+    }
+}
